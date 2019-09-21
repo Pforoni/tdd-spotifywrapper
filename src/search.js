@@ -1,20 +1,13 @@
-import {API_URL, HEADERS} from './config';
-import {toJson} from './utils';
+function seacher(type, query) {
+  return this.request(`${this.apiURL}/search?q=${query}&type=${type}`);
+}
 
-export const search = (query, type) => {
-  return fetch(`${API_URL}/search?q=${query}&type=${type}`, HEADERS)
-    .then(toJson);
+export default function search() {
+  return {
+    searchAlbums: seacher.bind(this, 'searchAlbums'),
+    artist: seacher.bind(this, 'artist'),
+    searchTracks: seacher.bind(this, 'searchTracks'),
+    searchPlaylists: seacher.bind(this, 'searchPlaylists'),
+  }
+};
 
-};
-export const searchAlbums = (q) => {
-  return search(q, 'album');
-};
-export const searchArtists = (q) => {
-  search(q, 'artist');
-};
-export const searchTracks = (q) => {
-  search(q, 'tracks');
-};
-export const searchPlaylists = (q) => {
-  search(q, 'playlist');
-};
